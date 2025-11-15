@@ -9,21 +9,22 @@ public:
     TemplArray();
     TemplArray(int s);
     ~TemplArray();
-    int getSize();
-     T& getValue(int index);
+     int getSize() const;
+    T& getValue(int index);
+    const T& getValue(int index) const;
     void replace(int index, const T& value);
-    void print();
+    void print() const;
 };
 
 
 
 template <typename T>
-TemplArray<T>::TemplArray(): size(5), arr( new T[5]{} )
+TemplArray<T>::TemplArray(): arr( new T[5]{} ), size(5)
 {
 }
 
 template <typename T>
-TemplArray<T>::TemplArray(int s): size(s), arr( new T[s]{} )
+TemplArray<T>::TemplArray(int s): arr( new T[s]{} ), size(s)
 {
 
 }
@@ -35,7 +36,7 @@ TemplArray<T>::~TemplArray()
 }
 
 template <typename T>
-int TemplArray<T>::getSize()
+int TemplArray<T>::getSize() const
 {
     return size;
 }
@@ -46,16 +47,24 @@ T& TemplArray<T>::getValue(int index)
     assert(index >=0 && index < size);
     return arr[index];
 }
+
+template <typename T>
+const T& TemplArray<T>::getValue(int index) const
+{
+    assert(index >=0 && index < size);
+    return arr[index];
+}
+
 template <typename T>
 void TemplArray<T>::replace(int index, const T& value)
 {
-    if(index >=0 && index < size) {
+     if(index >=0 && index < size) {
         arr[index] = value;
     }
 }
 
 template <typename T>
-void TemplArray<T>::print()
+void TemplArray<T>::print() const
 {
     for(int i=0; i<size; ++i) {
         std::cout << arr[i] << " ";
