@@ -1,47 +1,61 @@
 #include <iostream>
+#include <cassert>
 
-class IntArray {
-private:
-    int *arr;
+template <typename T>
+class TemplArray {
+    T *arr;
     int size;
 public:
-    IntArray();
-    IntArray(int s);
-    ~IntArray();
+    TemplArray();
+    TemplArray(int s);
+    ~TemplArray();
     int getSize();
-    int& getValue(int index);
-    void replace(int index, const int& value);
+     T& getValue(int index);
+    void replace(int index, const T& value);
     void print();
 };
 
-IntArray::IntArray(): size(5), arr( new int[5]{} )
+
+
+template <typename T>
+TemplArray<T>::TemplArray(): size(5), arr( new T[5]{} )
+{
+}
+
+template <typename T>
+TemplArray<T>::TemplArray(int s): size(s), arr( new T[s]{} )
 {
 
 }
-IntArray::IntArray(int s): size(s), arr( new int[s]{} )
-{
 
-}
-IntArray::~IntArray()
+template <typename T>
+TemplArray<T>::~TemplArray()
 {
     delete [] arr;
 }
-int IntArray::getSize()
+
+template <typename T>
+int TemplArray<T>::getSize()
 {
     return size;
 }
-int& IntArray::getValue(int index)
+
+template <typename T>
+T& TemplArray<T>::getValue(int index)
 {
     assert(index >=0 && index < size);
     return arr[index];
 }
-void IntArray::replace(int index, const int& value)
+template <typename T>
+void TemplArray<T>::replace(int index, const T& value)
 {
     if(index >=0 && index < size) {
         arr[index] = value;
     }
 }
-void IntArray::print()
+
+template <typename T>
+void TemplArray<T>::print()
 {
     for(int i=0; i<size; ++i) {
         std::cout << arr[i] << " ";
@@ -52,7 +66,8 @@ void IntArray::print()
 int main() {
     std::cout << std::endl;
 
-    IntArray a1;
+ // Use template with int
+    TemplArray<int> a1; 
     a1.print();
     for(int i=0; i<a1.getSize(); ++i) {
         a1.replace(i,(i+1)*10);
@@ -62,7 +77,7 @@ int main() {
     
     std::cout << "\n";
 
-    IntArray a2{10};
+        TemplArray<int> a2{10};
     for(int i=0; i<a2.getSize(); ++i) {
         a2.replace(i,(i+1)*10);
     }
